@@ -98,7 +98,7 @@ public async void MakeGuardedRequest() {
 
     using HttpClient client = new HttpClient(stanzaHandler);
     HttpResponseMessage response = await client.GetAsync("http://localhost:1234/guarded_resource/");
-     if (response.IsSuccessStatusCode) {
+    if (response.IsSuccessStatusCode) {
         // Guard was not blocked
     } else if (response.StatusCode == HttpStatusCode.TooManyRequests) {
         // Guard was blocked
