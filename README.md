@@ -1,107 +1,69 @@
 # Stanza .NET SDK
-## MVP
-As a .NET developer
-I want to be able to add stanza rate limiting to my application painlessly.
 
-I want to be able to add the stanza sdk to a project using nuget:
-```
+Stanza is a developer-first tool for increasing reliability based on prioritized traffic management, quota allocation, and rate-limiting. On the back-end, it helps prevent downtime related to overload and excessive use of third-party APIs. On the front-end, it helps segment and weight your traffic, react automatically to overload or other conditions, and inspect the state of your critical user journeys.
+
+"Stanza .NET SDK" provides higher-order functions (["guards"](https://docs.dev.getstanza.dev/glossary#guard)) for adding this fault tolerance to your .NET application.
+
+## Installation
+
+The SDK is available on nuget. You can install it with the following command:
+```shell
 dotnet add package GetStanza
 ```
-I want to be able to use the stanza sdk through a factory:
+
+## Usage
+
+### Quickstart
+
+After setting up your environment, API key, service, feature, and guard in the Stanza configuration dashboard, rate limiting may be added to your application like so:
+
 ```cs
 using GetStanza;
 
-var factory = new StanzaQuotaFactory("apikey", "servicename", "release", "environment", "hubaddress");
+var factory = new StanzaGuardFactory(new() {
+    ApiKey = "my-api-key",
+    Service = "my-service",
+    Release = "1.0.0",
+    Environment = "dev",
+});
 
-var quotaProvider = factory.CreateQuotaProvider();
+var myResourceGuard = factory.GetGuard("my-guarded-resource");
 
-// Guard a code block
-// TODO: IsQuotaAvailable could possibly take a DTO as well, also tags is a list
-//       Also how do we mark a guard as inbound/outbound/internal at the SDK layer?
-if (quotaProvider.IsQuotaAvailable("guardname", "featurename", "priorityBoost", "defaultWeight", "tags")) { 
-    // Do the logic
+if (myResourceGuard.Allowed()) {
+  // ✅ Stanza Guard has *allowed* this workflow, business logic goes here.
 } else {
-    // Signal that resource was blocked by stanza guard
-}
-```
-I want to be able to use the stanza sdk through dependency injection:
-```cs
-// In Program.cs
-using GetStanza;
-using worker;
-
-var builder = Host.CreateApplicationBuilder(args);
-builder.Services.AddHostedService<Worker>();
-
-// Here is where the user would tie into the standard .NET ecosystem for managing environment variables, and pass those directly to us
-builder.Services.AddStanzaQuotaProvider("apikey", "servicename", "release", "environment", "hubaddress");
-
-var host = builder.Build();
-host.Run();
-
-// In Worker.cs
-using GetStanza;
-
-namespace worker;
-
-public class Worker : BackgroundService
-{
-    private readonly IQuotaProvider _quotaProvider;
-
-    public Worker(IQuotaProvider quotaProvider) => _quotaProvider = quotaProvider;
-
-    protected override async Task ExecuteAsync(CancellationToken stoppingToken)
-    {
-        while (!stoppingToken.IsCancellationRequested)
-        {
-            // Guard a code block
-            if (_quotaProvider.IsQuotaAvailable("guardname", "featurename", "priorityBoost", "defaultWeight", "tags")) { 
-                // Do the logic
-            } else {
-                // Signal that resource was blocked by stanza guard
-            }
-
-            await Task.Delay(1000, stoppingToken);
-        }
-    }
+  // 🚫 Stanza Guard has *blocked* this workflow, log the reason and return 429 status
 }
 ```
 
-## Post MVP
-I want to seamlessly guard inbound requests in the same way that I add authentication middleware to my api endpoints:
+### Quality of Service
+
+A guard that has been configured in the Stanza configuration dashboard for quality of service rate limiting may be used like so:
+
 ```cs
 using GetStanza;
 
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+var factory = new StanzaGuardFactory(new() {
+        ApiKey = "my-api-key",
+        Service = "my-service",
+        Release = "1.0.0",
+        Environment = "dev",
+    });
 
-namespace MyApp.Namespace
+var myResourceGuard = factory.GetGuard("my-qos-guarded-resource", new() {
+    Feature = "my-qos-feature",
+    Tags = new Dictionary<string, string>() {
+        {"tier", "paid"},
+    },
+});
 
-[Route("api")]
-[ApiController]
-public class ApiController : Controller
-{
-    [HttpGet("guarded")]
-    [Authorize]
-    [StanzaGuard("guardname", "featurename", "priorityBoost", "defaultWeight", "tags")]
-    public IActionResult Guarded()
-    {
-        // We only enter this controller endpoint if the SDK already determined we were not blocked on this guard
-        return Ok();
-    }
+if (myResourceGuard.Allowed()) {
+  // ✅ Stanza Guard has *allowed* this workflow, business logic goes here.
+} else {
+  // 🚫 Stanza Guard has *blocked* this workflow, log the reason and return 429 status
 }
 ```
-I want to seamlessly guard outbound requests using an HttpClientHandler:
-```cs
-public async void MakeGuardedRequest() {
-    var stanzaHandler = new StanzaHandler("guardname", "featurename", "priorityBoost", "defaultWeight", "tags");
 
-    using HttpClient client = new HttpClient(stanzaHandler);
-    HttpResponseMessage response = await client.GetAsync("http://localhost:1234/guarded_resource/");
-    if (response.IsSuccessStatusCode) {
-        // Guard was not blocked
-    } else if (response.StatusCode == HttpStatusCode.TooManyRequests) {
-        // Guard was blocked
-    }
-}
-```
+## Community
+
+Join [Stanza's Community Discord](https://discord.gg/qaCRa2nMxY) to get involved and help us improve the SDK!
