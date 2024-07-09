@@ -3,7 +3,7 @@
 Run: `dotnet run`
 
 You can then run grpcui to explore the fakes by running: 
-`grpcui -plaintext -port 4500 localhost:5265`
+`grpcui -plaintext -port 4500 localhost:5000`
 
 (If you are running within the devcontainer, grpcui should already be installed for you)
 
