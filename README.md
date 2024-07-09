@@ -20,7 +20,7 @@ After setting up your environment, API key, service, feature, and guard in the S
 ```cs
 using GetStanza;
 
-var stanza = new StanzaAPI(new() {
+using var stanza = new StanzaAPI(new() {
     APIKey = "my-api-key",
     Service = "my-service",
     Release = "1.0.0",
@@ -36,6 +36,20 @@ if (myResourceGuard.Allowed()) {
 }
 ```
 
+### Depenency Injection
+Using this specific service registration method is recommended so that the client will be automatically disposed.
+
+https://learn.microsoft.com/en-us/dotnet/core/extensions/dependency-injection#service-registration-methods
+```cs
+// Add stanza client
+builder.Services.AddSingleton<IStanzaClient>(sp => new StanzaClient(new() {
+    APIKey = "my-api-key",
+    Service = "my-service",
+    Release = "1.0.0",
+    Environment = "dev",
+}));
+```
+
 ### Quality of Service
 
 A guard that has been configured in the Stanza configuration dashboard for quality of service rate limiting may be used like so:
@@ -43,7 +57,7 @@ A guard that has been configured in the Stanza configuration dashboard for quali
 ```cs
 using GetStanza;
 
-var stanza = new StanzaAPI(new() {
+using var stanza = new StanzaAPI(new() {
         APIKey = "my-api-key",
         Service = "my-service",
         Release = "1.0.0",
