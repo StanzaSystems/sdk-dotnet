@@ -1,5 +1,5 @@
 # Versioning
-Version numbers will follow semver. Appended with the current pre-release stage (e.g. alpha, beta) and the github build number.
+Version numbers will follow semver. Appended with the current pre-release stage (e.g. alpha, beta) and the github run number.
 
 Example:
 ```
