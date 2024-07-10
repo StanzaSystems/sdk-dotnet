@@ -43,4 +43,3 @@ jobs:
           ./GetStanza/bin/Release/GetStanza.${{ env.VERSION }}-${{ env.PRE_RELEASE }}${{ github.run_number }}.nupkg \
           --api-key ${{ env.NUGET_GETSTANZA_PUSH_API_KEY }} \
           --source "${{ env.NUGET_API_SOURCE }}"
-          
