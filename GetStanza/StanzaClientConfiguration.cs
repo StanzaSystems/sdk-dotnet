@@ -1,4 +1,4 @@
-namespace GetStanza.Models;
+namespace GetStanza;
 
 public record StanzaClientConfiguration
 {
