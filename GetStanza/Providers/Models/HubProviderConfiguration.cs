@@ -2,7 +2,7 @@ using GetStanza.Models;
 
 namespace GetStanza.Providers.Models;
 
-public record HubProviderConfiguration(StanzaClientConfiguration Config)
+internal record HubProviderConfiguration(StanzaClientConfiguration Config)
 {
     public readonly string ApiKey = Config.ApiKey;
     public readonly string Service = Config.Service;

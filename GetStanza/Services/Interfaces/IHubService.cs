@@ -8,7 +8,7 @@ namespace GetStanza.Services.Interfaces;
 /// <summary>
 /// Coordinates caching and fetching Hub models.
 /// </summary>
-public interface IHubService {
+internal interface IHubService {
     public Task<GuardConfig> GetGuardConfigAsync(
         string guardName,
         IDictionary<string, string>? tags,

@@ -5,7 +5,7 @@ using GetStanza.Providers.Interfaces;
 
 namespace GetStanza.Workers;
 
-public class ConfigurationCacheUpdateWorker(ConcurrentConfigurationsCache configsCache, IHubProvider hubProvider, CancellationToken stoppingToken) {
+internal class ConfigurationCacheUpdateWorker(ConcurrentConfigurationsCache configsCache, IHubProvider hubProvider, CancellationToken stoppingToken) {
     private const int CONFIG_POLL_INTERVAL_SECS = 15;
     private readonly ConcurrentConfigurationsCache _configsCache = configsCache;
     private readonly IHubProvider _hubProvider = hubProvider;

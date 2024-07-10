@@ -2,9 +2,9 @@ using System.Threading;
 using System.Threading.Tasks;
 using GetStanza.Services.Interfaces;
 
-namespace GetStanza;
+namespace GetStanza.Models;
 
-public class Guard(string guardName, GuardOptions guardOptions, IHubService hubService, bool failOpen)
+internal class Guard(string guardName, GuardOptions guardOptions, IHubService hubService, bool failOpen) : IGuard
 {
     private readonly string _guardName = guardName;
     private readonly GuardOptions _guardOptions = guardOptions;

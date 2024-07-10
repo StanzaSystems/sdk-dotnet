@@ -6,7 +6,7 @@ namespace GetStanza.Models;
 /// This class serves as the thread safe storage of guard configurations.
 /// Only one instance of this class should ever exist for any one StanzaClient instance.
 ///<\summary>
-public class ConcurrentConfigurationsCache()
+internal class ConcurrentConfigurationsCache()
 {
     public readonly ConcurrentDictionary<string, GuardConfigCache> GuardConfigs = new();
 }

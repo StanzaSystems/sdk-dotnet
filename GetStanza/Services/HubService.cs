@@ -8,7 +8,7 @@ using Stanza.Hub.V1;
 
 namespace GetStanza.Services;
 
-public class HubService(IHubProvider hubProvider, ConcurrentConfigurationsCache configurationsCache) : IHubService
+internal class HubService(IHubProvider hubProvider, ConcurrentConfigurationsCache configurationsCache) : IHubService
 {
     private readonly IHubProvider _hubProvider = hubProvider;
     private readonly ConcurrentConfigurationsCache _configurationsCache = configurationsCache;

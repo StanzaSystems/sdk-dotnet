@@ -8,7 +8,7 @@ namespace GetStanza.Providers.Interfaces;
 /// <summary>
 /// Provides connections to the Stanza Hub control plane.
 /// </summary>
-public interface IHubProvider
+internal interface IHubProvider
 {
     public Task<GetGuardConfigResponse> FetchGuardConfigAsync(
         string guardName,

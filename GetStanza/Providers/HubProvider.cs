@@ -9,7 +9,7 @@ using Stanza.Hub.V1;
 
 namespace GetStanza.Providers;
 
-public class HubProvider(
+internal class HubProvider(
     HubProviderConfiguration config,
     ConfigService.ConfigServiceClient configServiceClient,
     QuotaService.QuotaServiceClient quotaServiceClient) : IHubProvider
