@@ -20,19 +20,20 @@ After setting up your environment, API key, service, feature, and guard in the S
 ```cs
 using GetStanza;
 
-using var stanza = new StanzaAPI(new() {
-    APIKey = "my-api-key",
+using (var stanza = new StanzaClient(new() {
+    ApiKey = "my-api-key",
     Service = "my-service",
     Release = "1.0.0",
     Environment = "dev",
-});
+}))
+{
+  var myResourceGuard = stanza.GetGuard("my-guarded-resource");
 
-var myResourceGuard = stanza.GetGuard("my-guarded-resource");
-
-if (myResourceGuard.Allowed()) {
-  // ✅ Stanza Guard has *allowed* this workflow, business logic goes here.
-} else {
-  // 🚫 Stanza Guard has *blocked* this workflow, log the reason and return 429 status
+  if (myResourceGuard.Allowed()) {
+    // ✅ Stanza Guard has *allowed* this workflow, business logic goes here.
+  } else {
+    // 🚫 Stanza Guard has *blocked* this workflow, log the reason and return 429 status
+  }
 }
 ```
 
@@ -43,7 +44,7 @@ https://learn.microsoft.com/en-us/dotnet/core/extensions/dependency-injection#se
 ```cs
 // Add stanza client
 builder.Services.AddSingleton<IStanzaClient>(sp => new StanzaClient(new() {
-    APIKey = "my-api-key",
+    ApiKey = "my-api-key",
     Service = "my-service",
     Release = "1.0.0",
     Environment = "dev",
@@ -57,24 +58,25 @@ A guard that has been configured in the Stanza configuration dashboard for quali
 ```cs
 using GetStanza;
 
-using var stanza = new StanzaAPI(new() {
-        APIKey = "my-api-key",
+using (var stanza = new StanzaClient(new() {
+        ApiKey = "my-api-key",
         Service = "my-service",
         Release = "1.0.0",
         Environment = "dev",
-    });
+    }))
+{
+  var myResourceGuard = stanza.GetGuard("my-qos-guarded-resource", new() {
+      Feature = "my-qos-feature",
+      Tags = new Dictionary<string, string>() {
+          {"tier", "paid"},
+      },
+  });
 
-var myResourceGuard = stanza.GetGuard("my-qos-guarded-resource", new() {
-    Feature = "my-qos-feature",
-    Tags = new Dictionary<string, string>() {
-        {"tier", "paid"},
-    },
-});
-
-if (myResourceGuard.Allowed()) {
-  // ✅ Stanza Guard has *allowed* this workflow, business logic goes here.
-} else {
-  // 🚫 Stanza Guard has *blocked* this workflow, log the reason and return 429 status
+  if (myResourceGuard.Allowed()) {
+    // ✅ Stanza Guard has *allowed* this workflow, business logic goes here.
+  } else {
+    // 🚫 Stanza Guard has *blocked* this workflow, log the reason and return 429 status
+  }
 }
 ```
 
