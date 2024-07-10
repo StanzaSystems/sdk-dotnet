@@ -37,7 +37,7 @@ using (var stanza = new StanzaClient(new() {
 }
 ```
 
-### Depenency Injection
+### Dependency Injection
 Using this specific service registration method is recommended so that the client will be automatically disposed.
 
 https://learn.microsoft.com/en-us/dotnet/core/extensions/dependency-injection#service-registration-methods
