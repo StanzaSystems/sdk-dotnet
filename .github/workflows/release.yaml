@@ -10,6 +10,7 @@ jobs:
   release:
     env:
       VERSION: 0.0.0
+      PRE_RELEASE: alpha
       NUGET_API_SOURCE: https://api.nuget.org/v3/index.json
 
     runs-on: ubuntu-latest
@@ -31,7 +32,7 @@ jobs:
         dotnet pack \
           --no-restore \
           --configuration Release \
-          -p:PackageVersion=${{ env.VERSION }}-alpha${{ github.run_number }} \
+          -p:PackageVersion=${{ env.VERSION }}-${{ env.PRE_RELEASE }}${{ github.run_number }} \
           GetStanza
 
     - name: Publish
@@ -39,6 +40,7 @@ jobs:
         NUGET_GETSTANZA_PUSH_API_KEY: ${{ secrets.NUGET_GETSTANZA_PUSH_API_KEY }}
       run: |
         dotnet nuget push \
-          ./GetStanza/bin/Release/GetStanza.${{ env.VERSION }}-alpha${{ github.run_number }}.nupkg \
+          ./GetStanza/bin/Release/GetStanza.${{ env.VERSION }}-${{ env.PRE_RELEASE }}${{ github.run_number }}.nupkg \
           --api-key ${{ env.NUGET_GETSTANZA_PUSH_API_KEY }} \
           --source "${{ env.NUGET_API_SOURCE }}"
+          
