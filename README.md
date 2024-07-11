@@ -40,9 +40,7 @@ using (var stanza = new StanzaClient(new() {
 
 ### Dependency Injection
 
-Using this specific service registration method is recommended so that the client will be automatically disposed.
-
-https://learn.microsoft.com/en-us/dotnet/core/extensions/dependency-injection#service-registration-methods
+Using this specific [service registration method](https://learn.microsoft.com/en-us/dotnet/core/extensions/dependency-injection#service-registration-methods) is recommended so that the client will be automatically disposed.
 
 ```csharp
 // Add stanza client
