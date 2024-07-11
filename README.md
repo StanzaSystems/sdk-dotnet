@@ -7,6 +7,7 @@ Stanza is a developer-first tool for increasing reliability based on prioritized
 ## Installation
 
 The SDK is available on nuget. You can install it with the following command:
+
 ```shell
 dotnet add package GetStanza
 ```
@@ -38,10 +39,10 @@ using (var stanza = new StanzaClient(new() {
 ```
 
 ### Dependency Injection
-Using this specific service registration method is recommended so that the client will be automatically disposed.
 
-https://learn.microsoft.com/en-us/dotnet/core/extensions/dependency-injection#service-registration-methods
-```cs
+Using this specific [service registration method](https://learn.microsoft.com/en-us/dotnet/core/extensions/dependency-injection#service-registration-methods) is recommended so that the client will be automatically disposed.
+
+```csharp
 // Add stanza client
 builder.Services.AddSingleton<IStanzaClient>(sp => new StanzaClient(new() {
     ApiKey = "my-api-key",
@@ -55,7 +56,7 @@ builder.Services.AddSingleton<IStanzaClient>(sp => new StanzaClient(new() {
 
 A guard that has been configured in the Stanza configuration dashboard for quality of service rate limiting may be used like so:
 
-```cs
+```csharp
 using GetStanza;
 
 using (var stanza = new StanzaClient(new() {
