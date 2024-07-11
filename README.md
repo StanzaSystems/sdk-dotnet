@@ -21,12 +21,12 @@ After setting up your environment, API key, service, feature, and guard in the S
 ```cs
 using GetStanza;
 
-using (var stanza = new StanzaClient(new() {
-    ApiKey = "my-api-key",
-    Service = "my-service",
-    Release = "1.0.0",
-    Environment = "dev",
-}))
+using (var stanza = new StanzaClient(
+    "my-api-key",
+    "my-service",
+    "1.0.0",
+    "dev",
+))
 {
   var myResourceGuard = stanza.GetGuard("my-guarded-resource");
 
@@ -44,12 +44,12 @@ Using this specific [service registration method](https://learn.microsoft.com/en
 
 ```csharp
 // Add stanza client
-builder.Services.AddSingleton<IStanzaClient>(sp => new StanzaClient(new() {
-    ApiKey = "my-api-key",
-    Service = "my-service",
-    Release = "1.0.0",
-    Environment = "dev",
-}));
+builder.Services.AddSingleton<IStanzaClient>(sp => new StanzaClient(
+    "my-api-key",
+    "my-service",
+    "1.0.0",
+    "dev",
+));
 ```
 
 ### Quality of Service
@@ -59,12 +59,12 @@ A guard that has been configured in the Stanza configuration dashboard for quali
 ```csharp
 using GetStanza;
 
-using (var stanza = new StanzaClient(new() {
-        ApiKey = "my-api-key",
-        Service = "my-service",
-        Release = "1.0.0",
-        Environment = "dev",
-    }))
+using (var stanza = new StanzaClient(
+    "my-api-key",
+    "my-service",
+    "1.0.0",
+    "dev",
+))
 {
   var myResourceGuard = stanza.GetGuard("my-qos-guarded-resource", new() {
       Feature = "my-qos-feature",

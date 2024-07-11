@@ -15,15 +15,12 @@ public class StanzaClientTests : IDisposable
     public StanzaClientTests(TestServerFixture testServerFixture)
     {
         _stanzaClient = new StanzaClient(
-            new()
-            {
-                ApiKey = "",
-                Service = "",
-                Release = "",
-                Environment = "",
-                HubAddress = testServerFixture.HubAddress,
-                StanzaHubNoTls = true,
-            }
+                "",
+                "",
+                "",
+                "",
+                testServerFixture.HubAddress,
+                true
         );
     }
 
@@ -37,15 +34,12 @@ public class StanzaClientTests : IDisposable
     {
         // Arrange
         var stanzaClient = new StanzaClient(
-            new()
-            {
-                ApiKey = "",
-                Service = "",
-                Release = "",
-                Environment = "",
-                HubAddress = "http://localhost:1234", // Unreachable host
-                StanzaHubNoTls = false,
-            }
+                "",
+                "",
+                "",
+                "",
+                "http://localhost:1234", // Unreachable host
+                false
         );
 
         // Act
