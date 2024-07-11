@@ -5,7 +5,9 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Server.Kestrel.Core;
 using Microsoft.Extensions.Hosting;
 
-internal class Program
+namespace GetStanza.IntegrationTests.Fakes;
+
+internal static class Program
 {
     private static async Task Main(string[] args)
     {
