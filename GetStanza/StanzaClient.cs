@@ -18,7 +18,7 @@ namespace GetStanza;
 /// </summary>
 public sealed class StanzaClient : IDisposable, IStanzaClient
 {
-    private readonly IHubService _hubService;
+    private readonly IHubService? _hubService;
     private readonly CancellationTokenSource _backgroundThreads;
     private readonly bool _failOpen = false;
 
