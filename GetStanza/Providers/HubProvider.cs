@@ -18,7 +18,8 @@ internal class HubProvider : IHubProvider
     public HubProvider(
         HubProviderConfiguration config,
         ConfigService.ConfigServiceClient configServiceClient,
-        QuotaService.QuotaServiceClient quotaServiceClient)
+        QuotaService.QuotaServiceClient quotaServiceClient
+    )
     {
         _configServiceClient = configServiceClient;
         _quotaServiceClient = quotaServiceClient;
@@ -29,56 +30,56 @@ internal class HubProvider : IHubProvider
         string guardName,
         IDictionary<string, string>? tags,
         string? versionSeen,
-        CancellationToken cancellationToken)
+        CancellationToken cancellationToken
+    )
     {
-        GuardServiceSelector selector = new()
-        {
-            GuardName = guardName,
-            Environment = _config.Environment,
-            ServiceName = _config.Service,
-            ServiceRelease = _config.Service,
-        };
+        GuardServiceSelector selector =
+            new()
+            {
+                GuardName = guardName,
+                Environment = _config.Environment,
+                ServiceName = _config.Service,
+                ServiceRelease = _config.Service,
+            };
 
         if (tags is not null)
-            selector.Tags.AddRange(tags.Select(tag => new Tag()
-            {
-                Key = tag.Key,
-                Value = tag.Value
-            }));
+            selector.Tags.AddRange(
+                tags.Select(tag => new Tag() { Key = tag.Key, Value = tag.Value })
+            );
 
-        return await _configServiceClient.GetGuardConfigAsync(new()
-        {
-            Selector = selector,
-            VersionSeen = versionSeen ?? "",
-        }, new Metadata { { "x-stanza-key", _config.ApiKey } }, cancellationToken: cancellationToken);
+        return await _configServiceClient.GetGuardConfigAsync(
+            new() { Selector = selector, VersionSeen = versionSeen ?? "", },
+            new Metadata { { "x-stanza-key", _config.ApiKey } },
+            cancellationToken: cancellationToken
+        );
     }
 
     public GetGuardConfigResponse FetchGuardConfig(
         string guardName,
         IDictionary<string, string>? tags,
         string? versionSeen,
-        CancellationToken cancellationToken)
+        CancellationToken cancellationToken
+    )
     {
-        GuardServiceSelector selector = new()
-        {
-            GuardName = guardName,
-            Environment = _config.Environment,
-            ServiceName = _config.Service,
-            ServiceRelease = _config.Service,
-        };
+        GuardServiceSelector selector =
+            new()
+            {
+                GuardName = guardName,
+                Environment = _config.Environment,
+                ServiceName = _config.Service,
+                ServiceRelease = _config.Service,
+            };
 
         if (tags is not null)
-            selector.Tags.AddRange(tags.Select(tag => new Tag()
-            {
-                Key = tag.Key,
-                Value = tag.Value
-            }));
+            selector.Tags.AddRange(
+                tags.Select(tag => new Tag() { Key = tag.Key, Value = tag.Value })
+            );
 
-        return _configServiceClient.GetGuardConfig(new()
-        {
-            Selector = selector,
-            VersionSeen = versionSeen ?? "",
-        }, new Metadata { { "x-stanza-key", _config.ApiKey } }, cancellationToken: cancellationToken);
+        return _configServiceClient.GetGuardConfig(
+            new() { Selector = selector, VersionSeen = versionSeen ?? "", },
+            new Metadata { { "x-stanza-key", _config.ApiKey } },
+            cancellationToken: cancellationToken
+        );
     }
 
     public async Task<GetTokenResponse> FetchQuotaTokenAsync(
@@ -88,26 +89,22 @@ internal class HubProvider : IHubProvider
         string? clientId,
         int? priorityBoost,
         float? weight,
-        CancellationToken cancellationToken)
+        CancellationToken cancellationToken
+    )
     {
-        GuardFeatureSelector selector = new()
-        {
-            GuardName = guardName,
-            Environment = _config.Environment,
-            FeatureName = featureName,
-
-        };
-        if (tags is not null)
-            selector.Tags.AddRange(tags.Select(tag => new Tag()
+        GuardFeatureSelector selector =
+            new()
             {
-                Key = tag.Key,
-                Value = tag.Value
-            }));
+                GuardName = guardName,
+                Environment = _config.Environment,
+                FeatureName = featureName,
+            };
+        if (tags is not null)
+            selector.Tags.AddRange(
+                tags.Select(tag => new Tag() { Key = tag.Key, Value = tag.Value })
+            );
 
-        GetTokenRequest request = new()
-        {
-            Selector = selector,
-        };
+        GetTokenRequest request = new() { Selector = selector, };
 
         if (clientId is not null)
             request.ClientId = clientId;
@@ -116,7 +113,11 @@ internal class HubProvider : IHubProvider
         if (weight is not null)
             request.Weight = weight.Value;
 
-        return await _quotaServiceClient.GetTokenAsync(request, new Metadata { { "x-stanza-key", _config.ApiKey } }, cancellationToken: cancellationToken);
+        return await _quotaServiceClient.GetTokenAsync(
+            request,
+            new Metadata { { "x-stanza-key", _config.ApiKey } },
+            cancellationToken: cancellationToken
+        );
     }
 
     public GetTokenResponse FetchQuotaToken(
@@ -126,26 +127,22 @@ internal class HubProvider : IHubProvider
         string? clientId,
         int? priorityBoost,
         float? weight,
-        CancellationToken cancellationToken)
+        CancellationToken cancellationToken
+    )
     {
-        GuardFeatureSelector selector = new()
-        {
-            GuardName = guardName,
-            Environment = _config.Environment,
-            FeatureName = featureName,
-
-        };
-        if (tags is not null)
-            selector.Tags.AddRange(tags.Select(tag => new Tag()
+        GuardFeatureSelector selector =
+            new()
             {
-                Key = tag.Key,
-                Value = tag.Value
-            }));
+                GuardName = guardName,
+                Environment = _config.Environment,
+                FeatureName = featureName,
+            };
+        if (tags is not null)
+            selector.Tags.AddRange(
+                tags.Select(tag => new Tag() { Key = tag.Key, Value = tag.Value })
+            );
 
-        GetTokenRequest request = new()
-        {
-            Selector = selector,
-        };
+        GetTokenRequest request = new() { Selector = selector, };
 
         if (clientId is not null)
             request.ClientId = clientId;
@@ -154,6 +151,10 @@ internal class HubProvider : IHubProvider
         if (weight is not null)
             request.Weight = weight.Value;
 
-        return _quotaServiceClient.GetToken(request, new Metadata { { "x-stanza-key", _config.ApiKey } }, cancellationToken: cancellationToken);
+        return _quotaServiceClient.GetToken(
+            request,
+            new Metadata { { "x-stanza-key", _config.ApiKey } },
+            cancellationToken: cancellationToken
+        );
     }
 }

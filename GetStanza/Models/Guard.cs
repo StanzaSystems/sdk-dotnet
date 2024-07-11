@@ -24,16 +24,22 @@ internal class Guard : IGuard
         if (_failOpen)
             return await Task.FromResult(true);
 
-        var config = await _hubService.GetGuardConfigAsync(_guardName, _guardOptions.Tags, cancellationToken);
+        var config = await _hubService.GetGuardConfigAsync(
+            _guardName,
+            _guardOptions.Tags,
+            cancellationToken
+        );
         if (config is not null && !config.CheckQuota)
             return true;
-        var quota = await _hubService.GetQuotaTokenAsync(_guardName,
-                                              _guardOptions.Feature,
-                                              _guardOptions.Tags,
-                                              _guardOptions.ClientId,
-                                              _guardOptions.PriorityBoost,
-                                              _guardOptions.DefaultWeight,
-                                              cancellationToken);
+        var quota = await _hubService.GetQuotaTokenAsync(
+            _guardName,
+            _guardOptions.Feature,
+            _guardOptions.Tags,
+            _guardOptions.ClientId,
+            _guardOptions.PriorityBoost,
+            _guardOptions.DefaultWeight,
+            cancellationToken
+        );
         return (config?.ReportOnly ?? false) || quota.Granted;
     }
 
@@ -45,13 +51,15 @@ internal class Guard : IGuard
         var config = _hubService.GetGuardConfig(_guardName, _guardOptions.Tags, cancellationToken);
         if (config is not null && !config.CheckQuota)
             return true;
-        var quota = _hubService.GetQuotaToken(_guardName,
-                                              _guardOptions.Feature,
-                                              _guardOptions.Tags,
-                                              _guardOptions.ClientId,
-                                              _guardOptions.PriorityBoost,
-                                              _guardOptions.DefaultWeight,
-                                              cancellationToken);
+        var quota = _hubService.GetQuotaToken(
+            _guardName,
+            _guardOptions.Feature,
+            _guardOptions.Tags,
+            _guardOptions.ClientId,
+            _guardOptions.PriorityBoost,
+            _guardOptions.DefaultWeight,
+            cancellationToken
+        );
         return (config?.ReportOnly ?? false) || quota.Granted;
     }
 }
