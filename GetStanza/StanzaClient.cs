@@ -27,25 +27,38 @@ public sealed class StanzaClient : IDisposable, IStanzaClient
         _backgroundThreads = new CancellationTokenSource();
         try
         {
-
             // Create a new thread safe configurations cache, create a hub service with knowledge of it, and spin up a worker to periodically update the cache.
             ConcurrentConfigurationsCache configurationsCache = new();
 
             var hubProviderConfig = new HubProviderConfiguration(config);
-            var channel = GrpcChannel.ForAddress(hubProviderConfig.HubAddress, new GrpcChannelOptions
-            {
-                Credentials = hubProviderConfig.StanzaHubNoTls ? ChannelCredentials.Insecure : ChannelCredentials.SecureSsl,
-            });
+            var channel = GrpcChannel.ForAddress(
+                hubProviderConfig.HubAddress,
+                new GrpcChannelOptions
+                {
+                    Credentials = hubProviderConfig.StanzaHubNoTls
+                        ? ChannelCredentials.Insecure
+                        : ChannelCredentials.SecureSsl,
+                }
+            );
 
-            HubProvider hubProvider = new(
-                hubProviderConfig, new ConfigService.ConfigServiceClient(channel),
-                new QuotaService.QuotaServiceClient(channel));
+            HubProvider hubProvider =
+                new(
+                    hubProviderConfig,
+                    new ConfigService.ConfigServiceClient(channel),
+                    new QuotaService.QuotaServiceClient(channel)
+                );
 
             _hubService = new HubService(hubProvider, configurationsCache);
 
             var pollConfigurationUpdatesToken = _backgroundThreads.Token;
-            var configCacheUpdateWorker = new ConfigurationCacheUpdateWorker(configurationsCache, hubProvider, pollConfigurationUpdatesToken);
-            var configCacheUpdateThread = new Thread(new ThreadStart(configCacheUpdateWorker.PollConfigurationUpdates))
+            var configCacheUpdateWorker = new ConfigurationCacheUpdateWorker(
+                configurationsCache,
+                hubProvider,
+                pollConfigurationUpdatesToken
+            );
+            var configCacheUpdateThread = new Thread(
+                new ThreadStart(configCacheUpdateWorker.PollConfigurationUpdates)
+            )
             {
                 IsBackground = true
             };

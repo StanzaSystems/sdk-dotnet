@@ -14,12 +14,14 @@ internal interface IHubProvider
         string guardName,
         IDictionary<string, string>? tags,
         string? versionSeen,
-        CancellationToken cancellationToken);
+        CancellationToken cancellationToken
+    );
     public GetGuardConfigResponse FetchGuardConfig(
         string guardName,
         IDictionary<string, string>? tags,
         string? versionSeen,
-        CancellationToken cancellationToken);
+        CancellationToken cancellationToken
+    );
     public Task<GetTokenResponse> FetchQuotaTokenAsync(
         string guardName,
         string? featureName,
@@ -27,7 +29,8 @@ internal interface IHubProvider
         string? clientId,
         int? priorityBoost,
         float? weight,
-        CancellationToken cancellationToken);
+        CancellationToken cancellationToken
+    );
     public GetTokenResponse FetchQuotaToken(
         string guardName,
         string? featureName,
@@ -35,5 +38,6 @@ internal interface IHubProvider
         string? clientId,
         int? priorityBoost,
         float? weight,
-        CancellationToken cancellationToken);
+        CancellationToken cancellationToken
+    );
 }

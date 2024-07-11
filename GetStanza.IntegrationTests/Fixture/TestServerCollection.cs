@@ -3,6 +3,4 @@ using Xunit;
 namespace GetStanza.IntegrationTests.Fixture;
 
 [CollectionDefinition(TestCollections.ApiIntegration)]
-public class TestServerCollection : ICollectionFixture<TestServerFixture>
-{
-}
+public class TestServerCollection : ICollectionFixture<TestServerFixture> { }

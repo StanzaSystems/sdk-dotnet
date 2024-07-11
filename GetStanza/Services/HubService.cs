@@ -22,23 +22,46 @@ internal class HubService : IHubService
     public async Task<GuardConfig> GetGuardConfigAsync(
         string guardName,
         IDictionary<string, string>? tags,
-        CancellationToken cancellationToken)
+        CancellationToken cancellationToken
+    )
     {
         if (_configurationsCache.GuardConfigs.TryGetValue(guardName, out var guardConfigCache))
             return guardConfigCache.Config;
 
-        var guardConfigResponse = await _hubProvider.FetchGuardConfigAsync(guardName, tags, null, cancellationToken);
-        _configurationsCache.GuardConfigs[guardName] = new(guardConfigResponse.Config, guardConfigResponse.Version, tags);
+        var guardConfigResponse = await _hubProvider.FetchGuardConfigAsync(
+            guardName,
+            tags,
+            null,
+            cancellationToken
+        );
+        _configurationsCache.GuardConfigs[guardName] = new(
+            guardConfigResponse.Config,
+            guardConfigResponse.Version,
+            tags
+        );
         return guardConfigResponse.Config;
     }
 
-    public GuardConfig GetGuardConfig(string guardName, IDictionary<string, string>? tags, CancellationToken cancellationToken)
+    public GuardConfig GetGuardConfig(
+        string guardName,
+        IDictionary<string, string>? tags,
+        CancellationToken cancellationToken
+    )
     {
         if (_configurationsCache.GuardConfigs.TryGetValue(guardName, out var guardConfigCache))
             return guardConfigCache.Config;
 
-        var guardConfigResponse = _hubProvider.FetchGuardConfig(guardName, tags, null, cancellationToken);
-        _configurationsCache.GuardConfigs[guardName] = new(guardConfigResponse.Config, guardConfigResponse.Version, tags);
+        var guardConfigResponse = _hubProvider.FetchGuardConfig(
+            guardName,
+            tags,
+            null,
+            cancellationToken
+        );
+        _configurationsCache.GuardConfigs[guardName] = new(
+            guardConfigResponse.Config,
+            guardConfigResponse.Version,
+            tags
+        );
         return guardConfigResponse.Config;
     }
 
@@ -49,8 +72,17 @@ internal class HubService : IHubService
         string? clientId,
         int? priorityBoost,
         float? weight,
-        CancellationToken cancellationToken)
-    => _hubProvider.FetchQuotaTokenAsync(guardName, featureName, tags, clientId, priorityBoost, weight, cancellationToken);
+        CancellationToken cancellationToken
+    ) =>
+        _hubProvider.FetchQuotaTokenAsync(
+            guardName,
+            featureName,
+            tags,
+            clientId,
+            priorityBoost,
+            weight,
+            cancellationToken
+        );
 
     public GetTokenResponse GetQuotaToken(
         string guardName,
@@ -59,6 +91,15 @@ internal class HubService : IHubService
         string? clientId,
         int? priorityBoost,
         float? weight,
-        CancellationToken cancellationToken)
-    => _hubProvider.FetchQuotaToken(guardName, featureName, tags, clientId, priorityBoost, weight, cancellationToken);
+        CancellationToken cancellationToken
+    ) =>
+        _hubProvider.FetchQuotaToken(
+            guardName,
+            featureName,
+            tags,
+            clientId,
+            priorityBoost,
+            weight,
+            cancellationToken
+        );
 }

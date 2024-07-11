@@ -9,7 +9,11 @@ internal class GuardConfigCache
     public readonly GuardConfig Config;
     public readonly IDictionary<string, string>? Tags;
 
-    public GuardConfigCache(GuardConfig guardConfig, string version, IDictionary<string, string>? tags)
+    public GuardConfigCache(
+        GuardConfig guardConfig,
+        string version,
+        IDictionary<string, string>? tags
+    )
     {
         Version = version;
         Config = guardConfig;

@@ -18,17 +18,21 @@ public class QuotaService : Hub.QuotaService.QuotaServiceBase
     /// To prevent granting a token, pass a guard whose name contains "NotGranted".
     /// </summary>
     /// <returns>A faked GetTokenResponse.</returns>
-    public override Task<GetTokenResponse> GetToken(GetTokenRequest request, ServerCallContext context)
+    public override Task<GetTokenResponse> GetToken(
+        GetTokenRequest request,
+        ServerCallContext context
+    )
     {
         _logger.LogInformation("GetToken called with request: {request}", request);
 
-        GetTokenResponse result = new()
-        {
-            Granted = true,
-            Mode = Mode.Normal,
-            Reason = Reason.SufficientQuota,
-            Token = "fakeToken",
-        };
+        GetTokenResponse result =
+            new()
+            {
+                Granted = true,
+                Mode = Mode.Normal,
+                Reason = Reason.SufficientQuota,
+                Token = "fakeToken",
+            };
 
         if (request.Selector is not null && request.Selector.GuardName.Contains("NotGranted"))
         {

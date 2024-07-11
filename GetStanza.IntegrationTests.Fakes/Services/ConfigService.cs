@@ -19,22 +19,26 @@ public class ConfigService : Hub.ConfigService.ConfigServiceBase
     /// To disable quota check, pass a guard whose name contains "NoQuotaCheck".
     /// </summary>
     /// <returns>A faked GetGuardConfigResponse.</returns>
-    public override Task<GetGuardConfigResponse> GetGuardConfig(GetGuardConfigRequest request, ServerCallContext context)
+    public override Task<GetGuardConfigResponse> GetGuardConfig(
+        GetGuardConfigRequest request,
+        ServerCallContext context
+    )
     {
         _logger.LogInformation("GetGuardConfig called with request: {request}", request);
 
-        GetGuardConfigResponse result = new()
-        {
-            Config = new()
+        GetGuardConfigResponse result =
+            new()
             {
-                CheckQuota = true,
-                QuotaTags = { },
-                ReportOnly = false,
-                ValidateIngressTokens = false
-            },
-            ConfigDataSent = true,
-            Version = "1"
-        };
+                Config = new()
+                {
+                    CheckQuota = true,
+                    QuotaTags = { },
+                    ReportOnly = false,
+                    ValidateIngressTokens = false
+                },
+                ConfigDataSent = true,
+                Version = "1"
+            };
 
         if (request.Selector is not null && request.Selector.GuardName.Contains("ReportOnly"))
             result.Config.ReportOnly = true;

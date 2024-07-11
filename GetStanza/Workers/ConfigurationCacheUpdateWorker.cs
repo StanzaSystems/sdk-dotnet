@@ -12,23 +12,34 @@ internal class ConfigurationCacheUpdateWorker
     private readonly IHubProvider _hubProvider;
     private readonly CancellationToken _stoppingToken;
 
-    public ConfigurationCacheUpdateWorker(ConcurrentConfigurationsCache configsCache, IHubProvider hubProvider, CancellationToken stoppingToken)
+    public ConfigurationCacheUpdateWorker(
+        ConcurrentConfigurationsCache configsCache,
+        IHubProvider hubProvider,
+        CancellationToken stoppingToken
+    )
     {
         _configsCache = configsCache;
         _hubProvider = hubProvider;
         _stoppingToken = stoppingToken;
     }
 
-    public async void PollConfigurationUpdates() {
-        while (!_stoppingToken.IsCancellationRequested) {
-            foreach (var (guardName, guardConfigCache) in _configsCache.GuardConfigs) {
-                var guardConfigResponse = await _hubProvider.FetchGuardConfigAsync(guardName,
-                                                                              guardConfigCache.Tags,
-                                                                              guardConfigCache.Version,
-                                                                              CancellationToken.None);
-                _configsCache.GuardConfigs[guardName] = new(guardConfigResponse.Config,
-                                                            guardConfigResponse.Version,
-                                                            guardConfigCache.Tags);
+    public async void PollConfigurationUpdates()
+    {
+        while (!_stoppingToken.IsCancellationRequested)
+        {
+            foreach (var (guardName, guardConfigCache) in _configsCache.GuardConfigs)
+            {
+                var guardConfigResponse = await _hubProvider.FetchGuardConfigAsync(
+                    guardName,
+                    guardConfigCache.Tags,
+                    guardConfigCache.Version,
+                    CancellationToken.None
+                );
+                _configsCache.GuardConfigs[guardName] = new(
+                    guardConfigResponse.Config,
+                    guardConfigResponse.Version,
+                    guardConfigCache.Tags
+                );
             }
 
             Thread.Sleep(TimeSpan.FromSeconds(CONFIG_POLL_INTERVAL_SECS));

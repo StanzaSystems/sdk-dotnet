@@ -1,5 +1,5 @@
-using Shouldly;
 using GetStanza.IntegrationTests.Fixture;
+using Shouldly;
 
 namespace GetStanza.IntegrationTests;
 
@@ -11,17 +11,20 @@ public class StanzaClientTests : IDisposable
     private const string NO_QUOTA_CHECK = "NoQuotaCheck";
     private const string TOKEN_NOT_GRANTED = "NotGranted";
     private readonly StanzaClient _stanzaClient;
+
     public StanzaClientTests(TestServerFixture testServerFixture)
     {
-        _stanzaClient = new StanzaClient(new()
-        {
-            ApiKey = "",
-            Service = "",
-            Release = "",
-            Environment = "",
-            HubAddress = testServerFixture.HubAddress,
-            StanzaHubNoTls = true,
-        });
+        _stanzaClient = new StanzaClient(
+            new()
+            {
+                ApiKey = "",
+                Service = "",
+                Release = "",
+                Environment = "",
+                HubAddress = testServerFixture.HubAddress,
+                StanzaHubNoTls = true,
+            }
+        );
     }
 
     public void Dispose()
@@ -33,15 +36,17 @@ public class StanzaClientTests : IDisposable
     public async Task StanzaClientShouldFailOpen()
     {
         // Arrange
-        var stanzaClient = new StanzaClient(new()
-        {
-            ApiKey = "",
-            Service = "",
-            Release = "",
-            Environment = "",
-            HubAddress = "http://localhost:1234", // Unreachable host
-            StanzaHubNoTls = false,
-        });
+        var stanzaClient = new StanzaClient(
+            new()
+            {
+                ApiKey = "",
+                Service = "",
+                Release = "",
+                Environment = "",
+                HubAddress = "http://localhost:1234", // Unreachable host
+                StanzaHubNoTls = false,
+            }
+        );
 
         // Act
         var guard = stanzaClient.GetGuard(DEFAULT_GUARD_NAME);
