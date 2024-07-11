@@ -22,7 +22,19 @@ public sealed class StanzaClient : IDisposable, IStanzaClient
     private readonly CancellationTokenSource _backgroundThreads;
     private readonly bool _failOpen = false;
 
-    public StanzaClient(StanzaClientConfiguration config)
+    public StanzaClient(
+        string apiKey,
+        string service
+    ) : this(apiKey, service, null, null, null, null) { }
+
+    public StanzaClient(
+        string apiKey,
+        string service,
+        string? release,
+        string? environment,
+        string? hubAddress,
+        bool? stanzaHubNoTls
+    )
     {
         _backgroundThreads = new CancellationTokenSource();
         try
@@ -30,7 +42,13 @@ public sealed class StanzaClient : IDisposable, IStanzaClient
             // Create a new thread safe configurations cache, create a hub service with knowledge of it, and spin up a worker to periodically update the cache.
             ConcurrentConfigurationsCache configurationsCache = new();
 
-            var hubProviderConfig = new HubProviderConfiguration(config);
+            var hubProviderConfig = new HubProviderConfiguration(
+                apiKey,
+                service,
+                release,
+                environment,
+                hubAddress,
+                stanzaHubNoTls);
             var channel = GrpcChannel.ForAddress(
                 hubProviderConfig.HubAddress,
                 new GrpcChannelOptions
