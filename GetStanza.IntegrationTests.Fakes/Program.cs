@@ -5,31 +5,34 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Server.Kestrel.Core;
 using Microsoft.Extensions.Hosting;
 
-internal class Program
+namespace GetStanza.IntegrationTests.Fakes
 {
-    private static async Task Main(string[] args)
+    internal static class Program
     {
-        await CreateHostBuilder(args).Build().RunAsync();
-    }
+        private static async Task Main(string[] args)
+        {
+            await CreateHostBuilder(args).Build().RunAsync();
+        }
 
-    public static IHostBuilder CreateHostBuilder(string[] args)
-    {
-        return Host.CreateDefaultBuilder(args)
-            .ConfigureWebHostDefaults(webBuilder =>
-            {
-                webBuilder
-                    .UseStartup<Startup>()
-                    .ConfigureKestrel(options =>
-                    {
-                        options.Listen(
-                            IPAddress.Any,
-                            5000,
-                            listenOptions =>
-                            {
-                                listenOptions.Protocols = HttpProtocols.Http2;
-                            }
-                        );
-                    });
-            });
+        public static IHostBuilder CreateHostBuilder(string[] args)
+        {
+            return Host.CreateDefaultBuilder(args)
+                .ConfigureWebHostDefaults(webBuilder =>
+                {
+                    webBuilder
+                        .UseStartup<Startup>()
+                        .ConfigureKestrel(options =>
+                        {
+                            options.Listen(
+                                IPAddress.Any,
+                                5000,
+                                listenOptions =>
+                                {
+                                    listenOptions.Protocols = HttpProtocols.Http2;
+                                }
+                            );
+                        });
+                });
+        }
     }
 }
