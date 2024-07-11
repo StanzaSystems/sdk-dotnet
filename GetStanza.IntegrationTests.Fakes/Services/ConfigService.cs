@@ -36,11 +36,11 @@ public class ConfigService : Hub.ConfigService.ConfigServiceBase
             Version = "1"
         };
 
-        if (request.Selector is not null && request.Selector.GuardName.Contains("ReportOnly"))
-            result.Config.ReportOnly = true;
-
-        if (request.Selector is not null && request.Selector.GuardName.Contains("NoQuotaCheck"))
-            result.Config.CheckQuota = false;
+        if (request.Selector is not null)
+        {
+            result.Config.ReportOnly = request.Selector.GuardName.Contains("ReportOnly");
+            result.Config.CheckQuota = !request.Selector.GuardName.Contains("NoQuotaCheck");
+        }
 
         return Task.FromResult(result);
     }
