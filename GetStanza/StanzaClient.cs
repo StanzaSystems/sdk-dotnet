@@ -76,7 +76,12 @@ public sealed class StanzaClient : IDisposable, IStanzaClient
         _backgroundThreads.Dispose();
     }
 
-    public IGuard GetGuard(string guardName, GuardOptions? options = null)
+    public IGuard GetGuard(string guardName)
+    {
+        GetGuard(guardName, null);
+    }
+
+    public IGuard GetGuard(string guardName, GuardOptions? options)
     {
         options ??= new()
         {
