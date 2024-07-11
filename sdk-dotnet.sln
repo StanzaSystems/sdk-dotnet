@@ -7,7 +7,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GetStanza", "GetStanza\GetS
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GetStanza.IntegrationTests", "GetStanza.IntegrationTests\GetStanza.IntegrationTests.csproj", "{AECC42DF-E764-401D-B6E1-4D4C15ACD02B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GetStanza.IntegrationTests.Fakes", "GetStanza.IntegrationTests.Fakes\GetStanza.IntegrationTests.Fakes.csproj", "{CDB658C9-D9DC-41A9-8FCC-5FE166901F8F}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GetStanza.IntegrationTests.FakeHub", "GetStanza.IntegrationTests.FakeHub\GetStanza.IntegrationTests.FakeHub.csproj", "{CDB658C9-D9DC-41A9-8FCC-5FE166901F8F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

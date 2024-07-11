@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Server.Kestrel.Core;
 using Microsoft.Extensions.Hosting;
-using GetStanza.IntegrationTests.Fakes;
+using GetStanza.IntegrationTests.FakeHub;
 
 internal class Program
 {

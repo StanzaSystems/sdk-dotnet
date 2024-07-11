@@ -38,7 +38,7 @@ public class TestServerCollection : ICollectionFixture<TestServerFixture>
 ```
 #### TestServerFixture
 ```cs
-using GetStanza.IntegrationTests.Fakes;
+using GetStanza.IntegrationTests.FakeHub;
 using Microsoft.AspNetCore.Hosting;
 using System.Net;
 using Microsoft.AspNetCore.Server.Kestrel.Core;

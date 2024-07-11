@@ -25,7 +25,7 @@
 
   <ItemGroup>
     <ProjectReference Include="../GetStanza/GetStanza.csproj" />
-    <ProjectReference Include="../GetStanza.IntegrationTests.Fakes/GetStanza.IntegrationTests.Fakes.csproj" />
+    <ProjectReference Include="../GetStanza.IntegrationTests.FakeHub/GetStanza.IntegrationTests.FakeHub.csproj" />
   </ItemGroup>
 
 </Project>

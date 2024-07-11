@@ -2,7 +2,7 @@ using Grpc.Core;
 using Stanza.Hub.V1;
 using Hub = Stanza.Hub.V1;
 
-namespace GetStanza.IntegrationTests.Fakes.Services;
+namespace GetStanza.IntegrationTests.FakeHub.Services;
 
 public class ConfigService : Hub.ConfigService.ConfigServiceBase
 {

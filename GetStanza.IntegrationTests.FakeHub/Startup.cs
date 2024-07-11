@@ -1,6 +1,6 @@
-using GetStanza.IntegrationTests.Fakes.Services;
+using GetStanza.IntegrationTests.FakeHub.Services;
 
-namespace GetStanza.IntegrationTests.Fakes;
+namespace GetStanza.IntegrationTests.FakeHub;
 
 public class Startup
 {
