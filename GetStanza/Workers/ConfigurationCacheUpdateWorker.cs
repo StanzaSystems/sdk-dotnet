@@ -5,11 +5,19 @@ using GetStanza.Providers.Interfaces;
 
 namespace GetStanza.Workers;
 
-internal class ConfigurationCacheUpdateWorker(ConcurrentConfigurationsCache configsCache, IHubProvider hubProvider, CancellationToken stoppingToken) {
+internal class ConfigurationCacheUpdateWorker
+{
     private const int CONFIG_POLL_INTERVAL_SECS = 15;
-    private readonly ConcurrentConfigurationsCache _configsCache = configsCache;
-    private readonly IHubProvider _hubProvider = hubProvider;
-    private readonly CancellationToken _stoppingToken = stoppingToken;
+    private readonly ConcurrentConfigurationsCache _configsCache;
+    private readonly IHubProvider _hubProvider;
+    private readonly CancellationToken _stoppingToken;
+
+    public ConfigurationCacheUpdateWorker(ConcurrentConfigurationsCache configsCache, IHubProvider hubProvider, CancellationToken stoppingToken)
+    {
+        _configsCache = configsCache;
+        _hubProvider = hubProvider;
+        _stoppingToken = stoppingToken;
+    }
 
     public async void PollConfigurationUpdates() {
         while (!_stoppingToken.IsCancellationRequested) {

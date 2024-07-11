@@ -9,14 +9,21 @@ using Stanza.Hub.V1;
 
 namespace GetStanza.Providers;
 
-internal class HubProvider(
-    HubProviderConfiguration config,
-    ConfigService.ConfigServiceClient configServiceClient,
-    QuotaService.QuotaServiceClient quotaServiceClient) : IHubProvider
+internal class HubProvider : IHubProvider
 {
-    private readonly ConfigService.ConfigServiceClient _configServiceClient = configServiceClient;
-    private readonly QuotaService.QuotaServiceClient _quotaServiceClient = quotaServiceClient;
-    private readonly HubProviderConfiguration _config = config;
+    private readonly ConfigService.ConfigServiceClient _configServiceClient;
+    private readonly QuotaService.QuotaServiceClient _quotaServiceClient;
+    private readonly HubProviderConfiguration _config;
+
+    public HubProvider(
+        HubProviderConfiguration config,
+        ConfigService.ConfigServiceClient configServiceClient,
+        QuotaService.QuotaServiceClient quotaServiceClient)
+    {
+        _configServiceClient = configServiceClient;
+        _quotaServiceClient = quotaServiceClient;
+        _config = config;
+    }
 
     public async Task<GetGuardConfigResponse> FetchGuardConfigAsync(
         string guardName,

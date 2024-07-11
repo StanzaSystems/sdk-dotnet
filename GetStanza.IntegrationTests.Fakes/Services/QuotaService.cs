@@ -4,9 +4,14 @@ using Hub = Stanza.Hub.V1;
 
 namespace GetStanza.IntegrationTests.Fakes.Services;
 
-public class QuotaService(ILogger<QuotaService> logger) : Hub.QuotaService.QuotaServiceBase
+public class QuotaService : Hub.QuotaService.QuotaServiceBase
 {
-    private readonly ILogger<QuotaService> _logger = logger;
+    private readonly ILogger<QuotaService> _logger;
+
+    public QuotaService(ILogger<QuotaService> logger)
+    {
+        _logger = logger;
+    }
 
     /// <summary>
     /// Fake implementation of QuotaService.GetToken.
