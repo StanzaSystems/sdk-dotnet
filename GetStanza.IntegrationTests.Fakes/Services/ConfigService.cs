@@ -4,9 +4,14 @@ using Hub = Stanza.Hub.V1;
 
 namespace GetStanza.IntegrationTests.Fakes.Services;
 
-public class ConfigService(ILogger<ConfigService> logger) : Hub.ConfigService.ConfigServiceBase
+public class ConfigService : Hub.ConfigService.ConfigServiceBase
 {
-    private readonly ILogger<ConfigService> _logger = logger;
+    private readonly ILogger<ConfigService> _logger;
+
+    public ConfigService(ILogger<ConfigService> logger)
+    {
+        _logger = logger;
+    }
 
     /// <summary>
     /// Fake implementation of ConfigService.GetGuardConfig.

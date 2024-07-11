@@ -4,12 +4,20 @@ using GetStanza.Services.Interfaces;
 
 namespace GetStanza.Models;
 
-internal class Guard(string guardName, GuardOptions guardOptions, IHubService hubService, bool failOpen) : IGuard
+internal class Guard : IGuard
 {
-    private readonly string _guardName = guardName;
-    private readonly GuardOptions _guardOptions = guardOptions;
-    private readonly IHubService _hubService = hubService;
-    private readonly bool _failOpen = failOpen;
+    private readonly string _guardName;
+    private readonly GuardOptions _guardOptions;
+    private readonly IHubService _hubService;
+    private readonly bool _failOpen;
+
+    public Guard(string guardName, GuardOptions guardOptions, IHubService hubService, bool failOpen)
+    {
+        _guardName = guardName;
+        _guardOptions = guardOptions;
+        _hubService = hubService;
+        _failOpen = failOpen;
+    }
 
     public async Task<bool> AllowedAsync(CancellationToken cancellationToken = default)
     {

@@ -3,8 +3,16 @@ using Stanza.Hub.V1;
 
 namespace GetStanza.Models;
 
-internal class GuardConfigCache(GuardConfig guardConfig, string version, IDictionary<string, string>? tags) {
-    public readonly string Version = version;
-    public readonly GuardConfig Config = guardConfig;
-    public readonly IDictionary<string, string>? Tags = tags;
+internal class GuardConfigCache
+{
+    public readonly string Version;
+    public readonly GuardConfig Config;
+    public readonly IDictionary<string, string>? Tags;
+
+    public GuardConfigCache(GuardConfig guardConfig, string version, IDictionary<string, string>? tags)
+    {
+        Version = version;
+        Config = guardConfig;
+        Tags = tags;
+    }
 }

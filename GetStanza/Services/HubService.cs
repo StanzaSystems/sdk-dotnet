@@ -8,10 +8,16 @@ using Stanza.Hub.V1;
 
 namespace GetStanza.Services;
 
-internal class HubService(IHubProvider hubProvider, ConcurrentConfigurationsCache configurationsCache) : IHubService
+internal class HubService : IHubService
 {
-    private readonly IHubProvider _hubProvider = hubProvider;
-    private readonly ConcurrentConfigurationsCache _configurationsCache = configurationsCache;
+    private readonly IHubProvider _hubProvider;
+    private readonly ConcurrentConfigurationsCache _configurationsCache;
+
+    public HubService(IHubProvider hubProvider, ConcurrentConfigurationsCache configurationsCache)
+    {
+        _hubProvider = hubProvider;
+        _configurationsCache = configurationsCache;
+    }
 
     public async Task<GuardConfig> GetGuardConfigAsync(
         string guardName,
