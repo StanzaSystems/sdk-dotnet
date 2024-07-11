@@ -78,7 +78,7 @@ public sealed class StanzaClient : IDisposable, IStanzaClient
 
     public IGuard GetGuard(string guardName)
     {
-        GetGuard(guardName, null);
+        return GetGuard(guardName, null);
     }
 
     public IGuard GetGuard(string guardName, GuardOptions? options)
