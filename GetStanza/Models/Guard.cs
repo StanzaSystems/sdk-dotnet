@@ -15,6 +15,7 @@ internal class Guard : IGuard
     {
         _guardName = guardName;
         _guardOptions = guardOptions;
+        _guardOptions.DefaultWeight ??= 1;
         _hubService = hubService;
         _failOpen = failOpen;
     }
