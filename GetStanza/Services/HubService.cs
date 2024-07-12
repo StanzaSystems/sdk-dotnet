@@ -67,11 +67,11 @@ internal class HubService : IHubService
 
     public Task<GetTokenResponse> GetQuotaTokenAsync(
         string guardName,
-        string? featureName,
+        string featureName,
         IDictionary<string, string>? tags,
         string? clientId,
         int? priorityBoost,
-        float? weight,
+        float weight,
         CancellationToken cancellationToken
     ) =>
         _hubProvider.FetchQuotaTokenAsync(
@@ -86,11 +86,11 @@ internal class HubService : IHubService
 
     public GetTokenResponse GetQuotaToken(
         string guardName,
-        string? featureName,
+        string featureName,
         IDictionary<string, string>? tags,
         string? clientId,
         int? priorityBoost,
-        float? weight,
+        float weight,
         CancellationToken cancellationToken
     ) =>
         _hubProvider.FetchQuotaToken(

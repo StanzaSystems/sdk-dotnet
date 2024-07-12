@@ -84,11 +84,11 @@ internal class HubProvider : IHubProvider
 
     public async Task<GetTokenResponse> FetchQuotaTokenAsync(
         string guardName,
-        string? featureName,
+        string featureName,
         IDictionary<string, string>? tags,
         string? clientId,
         int? priorityBoost,
-        float? weight,
+        float weight,
         CancellationToken cancellationToken
     )
     {
@@ -104,14 +104,12 @@ internal class HubProvider : IHubProvider
                 tags.Select(tag => new Tag() { Key = tag.Key, Value = tag.Value })
             );
 
-        GetTokenRequest request = new() { Selector = selector, };
+        GetTokenRequest request = new() { Selector = selector, Weight = weight };
 
         if (clientId is not null)
             request.ClientId = clientId;
         if (priorityBoost is not null)
             request.PriorityBoost = priorityBoost.Value;
-        if (weight is not null)
-            request.Weight = weight.Value;
 
         return await _quotaServiceClient.GetTokenAsync(
             request,
@@ -122,11 +120,11 @@ internal class HubProvider : IHubProvider
 
     public GetTokenResponse FetchQuotaToken(
         string guardName,
-        string? featureName,
+        string featureName,
         IDictionary<string, string>? tags,
         string? clientId,
         int? priorityBoost,
-        float? weight,
+        float weight,
         CancellationToken cancellationToken
     )
     {
@@ -142,14 +140,12 @@ internal class HubProvider : IHubProvider
                 tags.Select(tag => new Tag() { Key = tag.Key, Value = tag.Value })
             );
 
-        GetTokenRequest request = new() { Selector = selector, };
+        GetTokenRequest request = new() { Selector = selector, Weight = weight };
 
         if (clientId is not null)
             request.ClientId = clientId;
         if (priorityBoost is not null)
             request.PriorityBoost = priorityBoost.Value;
-        if (weight is not null)
-            request.Weight = weight.Value;
 
         return _quotaServiceClient.GetToken(
             request,
