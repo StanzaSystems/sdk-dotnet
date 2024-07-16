@@ -9,7 +9,7 @@ Stanza is a developer-first tool for increasing reliability based on prioritized
 The SDK is available on nuget. You can install it with the following command:
 
 ```shell
-dotnet add package GetStanza
+dotnet add package GetStanza --prerelease
 ```
 
 ## Usage
