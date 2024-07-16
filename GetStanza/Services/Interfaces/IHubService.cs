@@ -22,20 +22,20 @@ internal interface IHubService
     );
     public Task<GetTokenResponse> GetQuotaTokenAsync(
         string guardName,
-        string? featureName,
+        string featureName,
         IDictionary<string, string>? tags,
         string? clientId,
         int? priorityBoost,
-        float? weight,
+        float weight,
         CancellationToken cancellationToken
     );
     public GetTokenResponse GetQuotaToken(
         string guardName,
-        string? featureName,
+        string featureName,
         IDictionary<string, string>? tags,
         string? clientId,
         int? priorityBoost,
-        float? weight,
+        float weight,
         CancellationToken cancellationToken
     );
 }

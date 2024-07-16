@@ -16,6 +16,7 @@ internal class Guard : IGuard
         _guardName = guardName;
         _guardOptions = guardOptions;
         _guardOptions.DefaultWeight ??= 1;
+        _guardOptions.Feature ??= "";
         _hubService = hubService;
         _failOpen = failOpen;
     }
@@ -34,11 +35,11 @@ internal class Guard : IGuard
             return true;
         var quota = await _hubService.GetQuotaTokenAsync(
             _guardName,
-            _guardOptions.Feature,
+            _guardOptions.Feature!,
             _guardOptions.Tags,
             _guardOptions.ClientId,
             _guardOptions.PriorityBoost,
-            _guardOptions.DefaultWeight,
+            _guardOptions.DefaultWeight!.Value,
             cancellationToken
         );
         return (config?.ReportOnly ?? false) || quota.Granted;
@@ -54,11 +55,11 @@ internal class Guard : IGuard
             return true;
         var quota = _hubService.GetQuotaToken(
             _guardName,
-            _guardOptions.Feature,
+            _guardOptions.Feature!,
             _guardOptions.Tags,
             _guardOptions.ClientId,
             _guardOptions.PriorityBoost,
-            _guardOptions.DefaultWeight,
+            _guardOptions.DefaultWeight!.Value,
             cancellationToken
         );
         return (config?.ReportOnly ?? false) || quota.Granted;
